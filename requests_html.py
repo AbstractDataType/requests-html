@@ -95,7 +95,7 @@ class BaseParser:
         if self._html:
             return self._html
         else:
-            return etree.tostring(self.element, encoding='unicode').strip().encode(self.encoding)
+            return etree.tostring(self.element, encoding='unicode', method='html').strip().encode(self.encoding)
 
     @property
     def html(self) -> _BaseHTML:
@@ -105,7 +105,7 @@ class BaseParser:
         if self._html:
             return self.raw_html.decode(self.encoding, errors='replace')
         else:
-            return etree.tostring(self.element, encoding='unicode').strip()
+            return etree.tostring(self.element, encoding='unicode', method='html').strip()
 
     @html.setter
     def html(self, html: str) -> None:
