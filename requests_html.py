@@ -95,7 +95,7 @@ class BaseParser:
         if self._html:
             return self._html
         else:
-            return etree.tostring(self.element, encoding='unicode').strip().encode(self.encoding)
+            return etree.tostring(self.element, encoding='utf8', method='html').strip().encode(self.encoding)
 
     @property
     def html(self) -> _BaseHTML:
@@ -105,7 +105,7 @@ class BaseParser:
         if self._html:
             return self.raw_html.decode(self.encoding, errors='replace')
         else:
-            return etree.tostring(self.element, encoding='unicode').strip()
+            return etree.tostring(self.element, encoding='utf8', method='html').strip()
 
     @html.setter
     def html(self, html: str) -> None:
@@ -229,7 +229,7 @@ class BaseParser:
             elements = []
 
             for element in elements_copy:
-                element.raw_html = lxml_html_tostring(cleaner.clean_html(element.lxml))
+                element.raw_html = lxml_html_tostring(cleaner.clean_html(element.lxml),encoding='utf8')
                 elements.append(element)
 
         return _get_first_or_list(elements, first)
